@@ -3,6 +3,7 @@ import validateRequest from '../../Middleware/validateRequest';
 import { TraineeValidations } from '../Trainee/trainee.validation';
 import { UserControllers } from './user.controller';
 import { TrainerValidations } from '../Trainer/trainer.validation';
+import auth from '../../Middleware/auth';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.post(
 );
 router.post(
     '/crete-trainer',
+    auth('admin'),
     validateRequest(TrainerValidations.createsTrainerValidationSchema),
     UserControllers.createTrainer
 );
