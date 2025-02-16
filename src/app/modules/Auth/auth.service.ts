@@ -7,6 +7,18 @@ import config from '../../config';
 import jwt from 'jsonwebtoken';
 
 const registerUserIntoDB = async (payload: TUser) => {
+    if (payload.role === 'admin') {
+        throw new AppError(
+            StatusCodes.UNAUTHORIZED,
+            'Only Super Admin can create an Admin account.'
+        );
+    } else if (payload.role === 'trainer') {
+        throw new AppError(
+            StatusCodes.UNAUTHORIZED,
+            'Only Admin can create a Trainer account.'
+        );
+    }
+
     const user = await User.create(payload);
 
     const result = await User.findById(user._id)
