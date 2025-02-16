@@ -1,12 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
-import AppError from '../../errors/AppError';
 import { TClassSchedule } from '../Schedule/classSchedule.interface';
+import AppError from '../../errors/AppError';
 import ClassSchedule from '../Schedule/classSchedule.model';
+import { Trainer } from '../Trainer/trainer.model';
 
 const createClassScheduleIntoDB = async (payload: TClassSchedule) => {
-    const { date, startTime, endTime, trainerId } = payload;
+    const { date, startTime, trainerId } = payload;
 
-    // Check if there's already 5 classes scheduled for the same date
+    // Check if the trainer already has 5 classes scheduled on this date
     const existingScheduleCount = await ClassSchedule.countDocuments({
         date,
         trainerId
@@ -15,27 +16,31 @@ const createClassScheduleIntoDB = async (payload: TClassSchedule) => {
     if (existingScheduleCount >= 5) {
         throw new AppError(
             StatusCodes.BAD_REQUEST,
-            'You can only schedule up to 5 classes per day.'
+            'A trainer can schedule up to 5 classes per day.'
         );
     }
 
-    // Check if there's already a class scheduled for the same date and time
+    // Check if the trainer has another class at the same time
     const existingSchedule = await ClassSchedule.findOne({
         date,
         startTime,
-        endTime,
         trainerId
     });
 
     if (existingSchedule) {
         throw new AppError(
             StatusCodes.CONFLICT,
-            'Class schedule already exists for this time and trainer.'
+            'The trainer already has a class at this time.'
         );
     }
 
     // Create the class schedule
     const newClassSchedule = await ClassSchedule.create(payload);
+
+    // Update Trainer's assignedClasses field
+    await Trainer.findByIdAndUpdate(trainerId, {
+        $push: { assignedClasses: newClassSchedule._id }
+    });
 
     return newClassSchedule;
 };
