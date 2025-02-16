@@ -15,7 +15,8 @@ const ClassScheduleSchema: mongoose.Schema = new Schema(
             required: true,
             min: 1, // Minimum 1 trainee required
             max: 10 // Maximum 10 trainees allowed
-        }
+        },
+        trainees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trainee' }]
     },
     { timestamps: true }
 );

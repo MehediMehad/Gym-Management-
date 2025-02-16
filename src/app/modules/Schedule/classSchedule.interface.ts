@@ -8,4 +8,5 @@ export type TClassSchedule = {
     capacity: number;
     createdAt: Date;
     updatedAt: Date;
+    trainees: Types.ObjectId[];
 };

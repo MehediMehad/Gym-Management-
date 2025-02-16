@@ -16,6 +16,15 @@ export const createsTraineeValidationSchema = z.object({
     })
 });
 
+export const bookClassScheduleValidationSchema = z.object({
+    body: z.object({
+        classScheduleId: z.string({
+            required_error: 'classScheduleId ID is required.'
+        })
+    })
+});
+
 export const TraineeValidations = {
-    createsTraineeValidationSchema
+    createsTraineeValidationSchema,
+    bookClassScheduleValidationSchema
 };

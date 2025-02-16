@@ -26,7 +26,8 @@ export const createClassScheduleValidationSchema = z.object({
                 .min(1, { message: 'Capacity must be at least 1 trainee.' })
                 .max(10, { message: 'Capacity cannot exceed 10 trainees.' }),
             endTime: z.string({ required_error: 'End time is required.' }),
-            trainerId: z.string({ required_error: 'Trainer ID is required.' })
+            trainerId: z.string({ required_error: 'Trainer ID is required.' }),
+            trainees: z.array(z.string()).optional()
         })
         .refine(data => validateTimeDifference(data.startTime, data.endTime), {
             message: 'Class duration must be exactly 2 hours.',
