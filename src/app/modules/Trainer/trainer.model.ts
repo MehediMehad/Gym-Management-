@@ -1,17 +1,18 @@
 import { Schema, model } from 'mongoose';
-import { TraineeModel, TTrainee } from './trainee.interface';
+import { TrainerModel, TTrainer } from './trainer.interface';
 
-const traineeSchema = new Schema<TTrainee, TraineeModel>(
+const TrainerSchema = new Schema<TTrainer, TrainerModel>(
     {
         user: {
             type: Schema.Types.ObjectId,
-            required: [true, 'Trainee id is required'],
+            required: [true, 'Trainer id is required'],
             unique: true,
-            ref: 'Trainee'
+            ref: 'Trainer'
         },
+
         name: {
             type: String,
-            required: [true, 'Trainee name is required.']
+            required: [true, 'Trainer name is required.']
         },
         gender: {
             type: String,
@@ -29,7 +30,8 @@ const traineeSchema = new Schema<TTrainee, TraineeModel>(
         contactNo: {
             type: String,
             required: [true, 'Contact number is required.']
-        }
+        },
+        assignedClasses: [{ type: Schema.Types.ObjectId, ref: 'ClassSchedule' }]
     },
     {
         timestamps: true,
@@ -39,4 +41,4 @@ const traineeSchema = new Schema<TTrainee, TraineeModel>(
     }
 );
 
-export const Trainee = model<TTrainee, TraineeModel>('Trainee', traineeSchema);
+export const Trainer = model<TTrainer, TrainerModel>('Trainer', TrainerSchema);
