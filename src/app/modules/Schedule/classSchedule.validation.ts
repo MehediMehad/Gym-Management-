@@ -21,11 +21,12 @@ export const createClassScheduleValidationSchema = z.object({
                     'Invalid date format. Use DD-MM-YYYY.'
                 ),
             startTime: z.string({ required_error: 'Start time is required.' }),
+            capacity: z
+                .number({ required_error: 'Capacity is required.' })
+                .min(1, { message: 'Capacity must be at least 1 trainee.' })
+                .max(10, { message: 'Capacity cannot exceed 10 trainees.' }),
             endTime: z.string({ required_error: 'End time is required.' }),
-            trainerId: z.string({ required_error: 'Trainer ID is required.' }),
-            trainees: z
-                .array(z.string())
-                .max(10, 'A class can have a maximum of 10 trainees.') // Max 10 trainees
+            trainerId: z.string({ required_error: 'Trainer ID is required.' })
         })
         .refine(data => validateTimeDifference(data.startTime, data.endTime), {
             message: 'Class duration must be exactly 2 hours.',

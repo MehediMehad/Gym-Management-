@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 import { TClassSchedule } from './classSchedule.interface';
-
 const ClassScheduleSchema: mongoose.Schema = new Schema(
     {
         date: { type: String, required: true }, // e.g., "2025-02-16"
@@ -11,7 +10,12 @@ const ClassScheduleSchema: mongoose.Schema = new Schema(
             ref: 'Trainer',
             required: true
         },
-        trainees: [{ type: Schema.Types.ObjectId, ref: 'Trainee' }] // Max 10 trainees
+        capacity: {
+            type: Number,
+            required: true,
+            min: 1, // Minimum 1 trainee required
+            max: 10 // Maximum 10 trainees allowed
+        }
     },
     { timestamps: true }
 );

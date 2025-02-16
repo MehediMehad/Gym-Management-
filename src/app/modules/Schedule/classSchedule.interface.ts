@@ -5,7 +5,7 @@ export type TClassSchedule = {
     startTime: string;
     endTime: string;
     trainerId: Types.ObjectId;
-    trainees: Types.ObjectId[];
+    capacity: number;
     createdAt: Date;
     updatedAt: Date;
 };
