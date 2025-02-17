@@ -63,6 +63,11 @@ const createTraineeIntoDB = async (payload: TTrainee) => {
 const createTrainerIntoDB = async (payload: TTrainer) => {
     const userData: Partial<TUser> = {};
     //set Trainer Info
+    
+    const user = await User.findOne({ email: payload.email });
+    if (user) {
+        throw new AppError(StatusCodes.BAD_REQUEST, 'A user with this email already exists.');
+    }
     userData.role = 'trainer';
     userData.email = payload.email;
     userData.name = payload.name;

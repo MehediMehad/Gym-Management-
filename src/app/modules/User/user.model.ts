@@ -27,7 +27,7 @@ const userSchema = new Schema<TUser, UserModel>(
         role: {
             type: String,
             enum: {
-                values: UserRole,
+                values: UserRole, 
                 message: '{VALUE} is not a valid user role.'
             },
             required: [true, 'role is required.']

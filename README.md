@@ -1,130 +1,88 @@
-#### Live Deployment Link (vercel): https://blog-project-backend-ten.vercel.app/
+# Gym Class Scheduling and Membership Management System
 
-## Project Overview: Blogging Platform Backend
+## Project Overview
+The **Gym Class Scheduling and Membership Management System** is designed to efficiently manage gym operations. This system defines three roles: **Admin, Trainer, and Trainee**, each with specific permissions.
 
-Developed a robust backend system for a blogging platform with the following key features:
+### Key Features:
+- **Admin:**
+  - Create and manage trainers.
+  - Schedule up to 5 classes per day.
+  - Assign trainers to schedules.
+- **Trainer:**
+  - View assigned class schedules.
+  - Cannot create new schedules or manage trainee profiles.
+- **Trainee:**
+  - Create and manage their profiles.
+  - Book available class schedules (max 10 trainees per class).
+  - Cancel their bookings if needed.
 
--   **Role Management:** Implemented two roles—**Admin** and **User**—with distinct permissions. Admins can manage users and their blogs, while users can perform CRUD operations on their own blogs.
--   **Authentication & Authorization:** Ensured secure authentication using bcrypt.js for password hashing and JWT for token-based access control. Incorporated role-based access control to restrict unauthorized actions.
--   **Blog Management:** Enabled users to create, read, update, and delete blogs, ensuring seamless content management.
--   **Public Blog API:** Built a public API to display blogs with **advanced features** like search, sort, and filter for efficient content discovery.
--   **Security & Scalability:** Followed best practices to secure sensitive data and designed the system to handle increasing user demands.
+## Technology Stack
+- **Programming Language:** TypeScript
+- **Web Framework:** Express.js
+- **Database:** MongoDB (Mongoose)
+- **Authentication:** JWT (JSON Web Tokens)
+- **Architecture:** Modular pattern
 
-This project showcases my expertise in backend development, secure authentication, and implementing scalable RESTful APIs.
+## Relational Diagram
+[Click here to view the Relational Diagram](#) *([Upload the diagram and provide the link here.](https://drive.google.com/file/d/1kP5eP7Wni_NJLCWvLWjo7nwW9S1gF69C/view?usp=sharing))*
 
----
+## Live Deployed Link
+[Gym Management API Live](#) *([Provide the deployed server link here.](https://gym-management-backend-nu.vercel.app/))*
 
-## Features
-
-### 1\. User Roles
-
-#### Admin:
-
--   Will be created manually in the database with predefined credentials.
--   Can delete any blog.
--   Can block any user by updating a property `isBlocked`.
--   **Cannot update any blog.**
-
-#### User:
-
--   Can register and log in.
--   Can create blogs (only when logged in).
--   Can update and delete their own blogs.
--   **Cannot perform admin actions.**
-
-### 2\. Authentication & Authorization
-
-#### Authentication:
-
--   Users must log in to perform write, update, and delete operations.
-
-#### Authorization:
-
--   Admin and User roles must be differentiated and secured.
-
-### 3\. Blog API
-
--   A public API for reading blogs:
-    -   Includes blog title, content, author details & other necessary information.
-    -   Supports **search**, **sorting**, and **filtering** functionalities.
-
----
-
-## Models
-
-**User Model:**
-
--   `name`: string – The full name of the user.
--   `email`: string – The email address of the user, used for authentication and communication.
--   `password`: string – The password for the user, securely stored.
--   `role`: "admin" | "user" – The role of the user, determining their access level. Default is "user".
--   `isBlocked`: boolean – A flag indicating whether the user is blocked or not. Default is false.
--   `createdAt`: Date – The timestamp when the user was created.
--   `updatedAt`: Date – The timestamp of the last update to the user.
-
-**Blog Model:**
-
--   `title`: string – The title of the blog post.
--   `content`: string – The main body or content of the blog post.
--   `author`: ObjectId – A reference to the `User` model, indicating the author of the blog post.
--   `isPublished`: boolean – A flag indicating whether the blog post is published. Default is true (published).
--   `createdAt`: Date – The timestamp when the blog post was created.
--   `updatedAt`: Date – The timestamp of the last update to the blog post.
-
-##
+## Admin Credentials
+```
+Email: robin@example.com
+Password: 12345678
+```
 
 ## API Endpoints
 
-### 1\. Authentication
+### 1. Crete Trainer
 
-#### 1.1 Register User
-
-**POST** `/api/auth/register`
-
-**Description:** Registers a new user with the platform. It validates user data and saves it to the database.
+**POST**  `/api/user/crete-trainer`
+**Headers**: `Authorization` : `Bearer {{admin-token}}`
 
 **Request Body:**
 
 ```json
 {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "password": "securepassword"
+    "name": "Rohan",
+    "gender": "male",
+    "email": "rohan@example.com",
+    "contactNo": "+8801712345678",
+    "password":"12345678"
 }
 ```
 
 **Response:**
-
--   **Success (201):**
-
 ```json
 {
     "success": true,
-    "message": "User registered successfully",
-    "statusCode": 201,
-    "data": {
-        "_id": "string",
-        "name": "string",
-        "email": "string"
-    }
+    "statusCode": 200,
+    "message": "Trainer is created successfully!",
+    "data": [
+      {
+        ...data
+      }
+    ]
 }
 ```
 
--   **Failure (400):**
+### 2. Crete Trainee
+**POST**  `/api/user/crete-trainee`
+**Request Body:**
 
 ```json
 {
-  "success": false,
-  "message": "Validation error",
-  "statusCode": 400,
-  "error": { "details" },
-  "stack": "error stack"
+    "name": "Raju",
+    "gender": "male",
+    "email": "raju@example.com",
+    "contactNo": "+8801712345678",
+    "password":"12345678"
 }
 ```
 
-####
-
-#### 1.2 Login User
+### 3. Login User
 
 **POST** `/api/auth/login`
 
@@ -154,27 +112,10 @@ This project showcases my expertise in backend development, secure authenticatio
 }
 ```
 
--   **Failure (401):**
 
-```json
-{
-  "success": false,
-  "message": "Invalid credentials",
-  "statusCode": 401,
-  "error": { "details" },
-  "stack": "error stack"
-}
-```
+### 4 Create-Schedule
 
-###
-
-### 2\. Blog Management
-
-#### 2.1 Create Blog
-
-**POST** `/api/blogs`
-
-**Description:** Allows a logged-in user to create a blog by providing a title and content.
+**POST** `/api/admin/create-schedule`
 
 **Request Header:**`Authorization: Bearer <token>`
 
@@ -182,8 +123,11 @@ This project showcases my expertise in backend development, secure authenticatio
 
 ```json
 {
-    "title": "My First Blog",
-    "content": "This is the content of my blog."
+    "date": "16-02-2025",
+    "startTime": "04:00",
+    "endTime": "06:00",
+    "trainerId": "67b1dc78612d9e42d02ccefe",
+    "capacity": 10
 }
 ```
 
@@ -193,205 +137,155 @@ This project showcases my expertise in backend development, secure authenticatio
 
 ```json
 {
-  "success": true,
-  "message": "Blog created successfully",
-  "statusCode": 201,
-  "data": {
-    "_id": "string",
-    "title": "string",
-    "content": "string",
-    "author": { "details" }
-  }
+    "success": true,
+    "statusCode": 201,
+    "message": "Schedule created successfully",
+    "data": {
+        "date": "16-02-2025",
+        "startTime": "08:00",
+        "endTime": "10:00",
+        "trainerId": "67b1dc78612d9e42d02ccefe",
+        "capacity": 10,
+        "trainees": [],
+        "_id": "67b3360024f9a1f58f050345",
+        "createdAt": "2025-02-17T13:13:36.987Z",
+        "updatedAt": "2025-02-17T13:13:36.987Z",
+        "__v": 0
+    }
 }
 ```
+### 
+#### 2. Trainer 
 
-####
+**GET** `/api/trainer/my-schedules`
 
-#### 2.2 Update Blog
+**Request Header:**`Authorization: Bearer <token>`
 
-**PATCH** `/api/blogs/:id`
+**Response:**
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Schedules is retrieved successfully.",
+    "data": [
+        {
+            "_id": "67b3483ca7481e4be74ecbb2",
+            "date": "16-02-2025",
+            "startTime": "22:00",
+            "endTime": "24:00",
+            "trainerId": {
+                "_id": "67b346eda7481e4be74ecb92",
+                "name": "mehedi",
+                "email": "mehedi@example.com",
+                "id": "67b346eda7481e4be74ecb92"
+            },
+            "capacity": 10,
+            "trainees": [],
+        }
+    ]
+}
+```
+### Trainee
+#### Book a Class Schedule 
 
-**Description:** Allows a logged-in user to update their own blog by its ID.
+**POST** `/api/trainee/book-class`
 
 **Request Header:**`Authorization: Bearer <token>`
 
 **Request Body:**
 
 ```json
-{
-    "title": "Updated Blog Title",
-    "content": "Updated content."
-}
+ {
+     "classScheduleId":"67b2ec4e7112474d9f635429"
+ }
 ```
-
 **Response:**
-
--   **Success (200):**
-
 ```json
 {
-  "success": true,
-  "message": "Blog updated successfully",
-  "statusCode": 200,
-  "data": {
-    "_id": "string",
-    "title": "string",
-    "content": "string",
-    "author": { "details" }
-  }
+    "success": true,
+    "statusCode": 200,
+    "message": "Class booked successfully",
+    "data": {
+        "_id": "67b3360024f9a1f58f050345",
+        "date": "16-02-2025",
+        "startTime": "08:00",
+        "endTime": "10:00",
+        "trainerId": null,
+        "capacity": 10,
+        "trainees": [
+            "67b2e96e7112474d9f635418"
+        ],
+        "createdAt": "2025-02-17T13:13:36.987Z",
+        "updatedAt": "2025-02-17T14:39:58.014Z",
+        "__v": 1
+    }
 }
 ```
+#### Cancel Booking
 
-####
-
-#### 2.3 Delete Blog
-
-**DELETE** `/api/blogs/:id`
-
-**Description:** Allows a logged-in user to delete their own blog by its ID.
+**POST** `/api/trainee/cancel-booking`
 
 **Request Header:**`Authorization: Bearer <token>`
 
+**Request Body:**
+
+```json
+ {
+     "classScheduleId":"67b2ec4e7112474d9f635429"
+ }
+```
 **Response:**
-
--   **Success (200):**
-
 ```json
 {
     "success": true,
-    "message": "Blog deleted successfully",
-    "statusCode": 200
-}
-```
-
-####
-
-#### 2.4 Get All Blogs (Public)
-
-**GET** `/api/blogs`
-
-**Description:** Provides a public API to fetch all blogs with options for searching, sorting, and filtering.
-
-**Query Parameters**:
-
--   `search`: Search blogs by title or content (e.g., `search=blogtitle`).
--   `sortBy`: Sort blogs by specific fields such as `createdAt` or `title` (e.g., `sortBy=title`).
--   `sortOrder`: Defines the sorting order. Accepts values `asc` (ascending) or `desc` (descending). (e.g., `sortOrder=desc`).
--   `filter`: Filter blogs by author ID (e.g., `author=authorId`).
-
-**Example Request URL**:
-
-```sql
-/api/blogs?search=technology&sortBy=createdAt&sortOrder=desc&filter=60b8f42f9c2a3c9b7cbd4f18
-```
-
-In this example:
-
--   `search=technology`: Filters blogs containing the term "technology" in the title or content.
--   `sortBy=createdAt`: Sorts the blogs by the `createdAt` field.
--   `sortOrder=desc`: Sorts in descending order (newest blogs first).
--   `filter=60b8f42f9c2a3c9b7cbd4f18`: Filters blogs authored by the user with the given `authorId`.
-
-**Response:**
-
--   **Success (200):**
-
-```json
-{
-  "success": true,
-  "message": "Blogs fetched successfully",
-  "statusCode": 200,
-  "data": [
-    {
-      "_id": "string",
-      "title": "string",
-      "content": "string",
-      "author": { "details" }
+    "statusCode": 200,
+    "message": "Booking canceled successfully",
+    "data": {
+        "_id": "67b3360024f9a1f58f050345",
+        "date": "16-02-2025",
+        "startTime": "08:00",
+        "endTime": "10:00",
+        "trainerId": "67b1dc78612d9e42d02ccefe",
+        "capacity": 10,
+        "trainees": [],
+        "createdAt": "2025-02-17T13:13:36.987Z",
+        "updatedAt": "2025-02-17T14:41:29.489Z",
+        "__v": 2
     }
-  ]
 }
 ```
+## Database Schema
+```js
+const AdminSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+  role: { type: String, default: 'admin' }
+});
 
-###
+const TrainerSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+  assignedSchedules: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Schedule' }]
+});
 
-### 3\. Admin Actions
+const TraineeSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+  assignedClasses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Schedule' }]
+});
 
-#### 3.1 Block User
-
-**PATCH** `/api/admin/users/:userId/block`
-
-**Description:** Allows an admin to block a user by updating the `isBlocked` property to `true`.
-
-**Request Header:**`Authorization: Bearer <admin_token>`
-
-**Response:**
-
--   **Success (200):**
-
-```json
-{
-    "success": true,
-    "message": "User blocked successfully",
-    "statusCode": 200
-}
+const ScheduleSchema = new mongoose.Schema({
+  date: Date,
+  timeSlot: String,
+  trainer: { type: mongoose.Schema.Types.ObjectId, ref: 'Trainer' },
+  trainees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trainee' }],
+  maxTrainees: { type: Number, default: 10 }
+});
 ```
 
-####
-
-#### 3.2 Delete Blog
-
-**DELETE** `/api/admin/blogs/:id`
-
-**Description:** Allows an admin to delete any blog by its ID.
-
-**Request Header:**`Authorization: Bearer <admin_token>`
-
-**Response:**
-
--   **Success (200):**
-
-```json
-{
-    "success": true,
-    "message": "Blog deleted successfully",
-    "statusCode": 200
-}
-```
-
----
-
-## Error Handling
-
-Error handling is crucial in ensuring that an application responds gracefully to unexpected situations, providing users with meaningful feedback while maintaining system stability. A well-structured error response format helps in identifying and diagnosing issues effectively.
-
-### Common Error Response Format
-
-To maintain consistency across all API endpoints, the following error response structure will be used:
-
-```json
-{
-    "success": false,
-    "message": "Error message describing the issue",
-    "statusCode": 400, // or other relevant HTTP status code
-    "error": { "details": "Additional error details, if applicable" },
-    "stack": "error stack trace, if available"
-}
-```
-
-#### Types of Errors Handled
-
-The following common errors will be managed with appropriate responses:
-
--   **Zod Validation Error** (`ZOD_ERROR`): Errors arising from invalid data inputs based on Zod schema validation.
--   **Not Found Error** (`NOT_FOUND_ERROR`): When requested resources (e.g., a user, item, or page) are not found.
--   **Validation Error** (`VALIDATION_ERROR`): General validation errors (e.g., incorrect data format, missing required fields).
--   **Authentication Error** (`AUTH_ERROR`): Issues related to failed authentication (e.g., invalid token or expired session).
--   **Authorization Error** (`AUTHORIZATION_ERROR`): When the user lacks the necessary permissions to access a resource.
--   **Internal Server Error** (`INTERNAL_SERVER_ERROR`): Unhandled errors or unexpected server issues.
-
-By consistently implementing these error handling mechanisms, we ensure a smooth user experience and easier debugging for developers.
-
-#
 
 ### Setup Instructions
 
@@ -403,8 +297,8 @@ By consistently implementing these error handling mechanisms, we ensure a smooth
 **1. Clone the Repository**
 
 ```bash
-git https://github.com/MehediMehad/Blog-Backend-Project.git
-cd Blog-Project-Backend
+git https://github.com/MehediMehad/Gym-Management-.git
+cd Gym-Management
 ```
 
 **2. Install Dependencies**
@@ -428,7 +322,47 @@ NODE_ENV='development'
 **4. Start the Application**
 
 ```bash
-npm run start:dev
+npm run dev
 ```
 
 ---
+
+## Testing Instructions
+1. **Admin Testing:**
+   - Login with the provided admin credentials.
+   - Create a trainer and assign schedules.
+2. **Trainer Testing:**
+   - View assigned schedules.
+3. **Trainee Testing:**
+   - Register as a trainee.
+   - Book a class if slots are available.
+   - Attempt to book an already full class to test error handling.
+
+## Error Handling
+### Sample Responses:
+**Validation Errors:**
+```json
+{
+    "success": false,
+    "message": "Validation error occurred.",
+    "errorDetails": {
+        "field": "email",
+        "message": "Invalid email format."
+    }
+}
+```
+**Unauthorized Access:**
+```json
+{
+    "success": false,
+    "message": "Unauthorized access.",
+    "errorDetails": "You must be an admin to perform this action."
+}
+```
+**Booking Limit Exceeded:**
+```json
+{
+    "success": false,
+    "message": "Class schedule is full. Maximum 10 trainees allowed per schedule."
+}
+```
