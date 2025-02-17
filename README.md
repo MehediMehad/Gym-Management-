@@ -31,8 +31,10 @@ The **Gym Class Scheduling and Membership Management System** is designed to eff
 
 ## Admin Credentials
 ```
-Email: robin@example.com
-Password: 12345678
+{
+  "email": "mdmehedihasanmehad@gmail.com",
+  "password": "MehediMehad"
+}
 ```
 
 ## API Endpoints
@@ -156,7 +158,7 @@ Password: 12345678
 ```
 ### 5 Get All Schedule
 
-**POST** `/api/schedule`
+**GET** `/api/schedule`
 
 **Request Header:**`Authorization: Bearer <token>`
 **Response:**
@@ -184,7 +186,7 @@ Password: 12345678
 }
 ```
 ### 
-#### 2. Trainer 
+#### Trainer 
 
 **GET** `/api/trainer/my-schedules`
 
@@ -211,6 +213,34 @@ Password: 12345678
             "capacity": 10,
             "trainees": [],
         }
+    ]
+}
+```
+### 5 Get All Trainer
+
+**GET** `/api/trainer`
+
+**Request Header:**`Authorization: Bearer <admin-token>`
+**Response:**
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "All Trainer retrieved successfully",
+    "data": [
+        {
+            "_id": "67b2e8573321399c707fd4ea",
+            "user": "67b2e8573321399c707fd4e5",
+            "name": "Rohan",
+            "gender": "male",
+            "email": "rohan@example.com",
+            "contactNo": "+8801712345678",
+            "assignedClasses": [],
+            "createdAt": "2025-02-17T07:42:15.768Z",
+            "updatedAt": "2025-02-17T07:42:15.768Z",
+            "__v": 0,
+            "id": "67b2e8573321399c707fd4ea"
+        },
     ]
 }
 ```
