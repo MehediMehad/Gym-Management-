@@ -20,6 +20,21 @@ const bookClassSchedule = catchAsync(async (req, res) => {
     });
 });
 
+const cancelBooking = catchAsync(async (req, res) => {
+    const { classScheduleId } = req.body;
+    const { userId } = req.user; // Authenticated user ID
+
+    const result = await TraineeServices.cancelBooking(userId, classScheduleId);
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: 'Booking canceled successfully',
+        data: result
+    });
+});
+
 export const TraineeControllers = {
-    bookClassSchedule
+    bookClassSchedule,
+    cancelBooking
 };

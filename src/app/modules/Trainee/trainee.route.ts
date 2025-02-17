@@ -13,4 +13,10 @@ router.post(
     TraineeControllers.bookClassSchedule
 );
 
+router.post(
+    '/cancel-booking',
+    auth('trainee'),
+    TraineeControllers.cancelBooking
+);
+
 export const TraineeRouter = router;

@@ -48,6 +48,33 @@ const bookClassSchedule = async (traineeId: string, classId: string) => {
     return classSchedule;
 };
 
+const cancelBooking = async (traineeId: string, classId: string) => {
+    const classSchedule = await ClassSchedule.findById(classId);
+
+    if (!classSchedule) {
+        throw new AppError(StatusCodes.NOT_FOUND, 'Class not found.');
+    }
+    // **Ensure traineeId exists in the list**
+    if (
+        !classSchedule.trainees.some(
+            id => id.toString() === traineeId.toString()
+        )
+    ) {
+        throw new AppError(
+            StatusCodes.BAD_REQUEST,
+            'You are not enrolled in this class.'
+        );
+    }
+
+    // Remove trainee
+    classSchedule.trainees = classSchedule.trainees.filter(
+        id => id.toString() !== traineeId.toString()
+    );
+    await classSchedule.save();
+    return classSchedule;
+};
+
 export const TraineeServices = {
-    bookClassSchedule
+    bookClassSchedule,
+    cancelBooking
 };
