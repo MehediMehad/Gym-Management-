@@ -154,6 +154,35 @@ Password: 12345678
     }
 }
 ```
+### 5 Get All Schedule
+
+**POST** `/api/schedule`
+
+**Request Header:**`Authorization: Bearer <token>`
+**Response:**
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "All schedules retrieved successfully",
+    "data": [
+        {
+            "_id": "67b2ec4e7112474d9f635429",
+            "date": "16-02-2025",
+            "startTime": "04:00",
+            "endTime": "06:00",
+            "trainerId": "67b1dc78612d9e42d02ccefe",
+            "capacity": 10,
+            "trainees": [
+                "67b2e96e7112474d9f635418"
+            ],
+            "createdAt": "2025-02-17T07:59:10.737Z",
+            "updatedAt": "2025-02-17T12:03:54.452Z",
+            "__v": 5
+        },
+    ]
+}
+```
 ### 
 #### 2. Trainer 
 
