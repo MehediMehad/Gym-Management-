@@ -19,4 +19,5 @@ router.delete(
     TraineeControllers.cancelBooking
 );
 
+router.get('/', auth('admin'), TraineeControllers.getAllTrainee);
 export const TraineeRouter = router;

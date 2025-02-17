@@ -2,6 +2,11 @@ import { StatusCodes } from 'http-status-codes';
 import { Trainer } from './trainer.model';
 import AppError from '../../errors/AppError';
 
+const getAllTrainerFromDB = async (query: Record<string, unknown>) => {
+    const result = await Trainer.find(query); 
+    return { result };
+};
+
 const getMySchedules = async (userEmail: string) => {
     const trainer = await Trainer.findOne({ email: userEmail }).populate({
         path: 'assignedClasses',
@@ -20,5 +25,6 @@ const getMySchedules = async (userEmail: string) => {
 };
 
 export const TrainerServices = {
-    getMySchedules
+    getMySchedules,
+    getAllTrainerFromDB
 };

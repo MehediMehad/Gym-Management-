@@ -33,8 +33,19 @@ const cancelBooking = catchAsync(async (req, res) => {
         data: result
     });
 });
+const getAllTrainee = catchAsync(async (req, res) => {
+    const result = await TraineeServices.getAllTraineeFromDB(req.query);
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: 'All Trainee retrieved successfully',
+        data: result.result
+    });
+});
 
 export const TraineeControllers = {
     bookClassSchedule,
-    cancelBooking
+    cancelBooking,
+    getAllTrainee
 };

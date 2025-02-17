@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import AppError from '../../errors/AppError';
 import ClassSchedule from '../Schedule/classSchedule.model';
 import mongoose from 'mongoose';
+import { Trainee } from './trainee.model';
 
 const bookClassSchedule = async (traineeId: string, classId: string) => {
     // Check if class exists
@@ -73,8 +74,13 @@ const cancelBooking = async (traineeId: string, classId: string) => {
     await classSchedule.save();
     return classSchedule;
 };
+const getAllTraineeFromDB = async (query: Record<string, unknown>) => {
+    const result = await Trainee.find(query); 
+    return { result };
+};
 
 export const TraineeServices = {
     bookClassSchedule,
-    cancelBooking
+    cancelBooking,
+    getAllTraineeFromDB
 };
