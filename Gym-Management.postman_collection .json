@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "a707ce10-86ec-44a1-831e-00514c9b9a08",
+		"name": "Gym-Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36631920"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create Trainer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"mehedi\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"mehedi@example.com\",\r\n    \"contactNo\": \"+8801712345678\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/user/crete-trainer",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"crete-trainer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Trainee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Raju\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"raju@example.com\",\r\n    \"contactNo\": \"+8801712345678\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/user/crete-trainee",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"crete-trainee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Admin Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"robin@example.com\",\r\n  \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/auth/login",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trainer Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"mehedi@example.com\",\r\n  \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/auth/login",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trainee Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"raju@example.com\",\r\n  \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/auth/login",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schedule",
+			"item": [
+				{
+					"name": "Create Schedule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"16-02-2025\",\r\n    \"startTime\": \"22:00\",\r\n    \"endTime\": \"24:00\",\r\n    \"trainerId\": \"67b346eda7481e4be74ecb92\",\r\n    \"capacity\": 10\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/admin/create-schedule",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"create-schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Schedule",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{gym-url}}/api/schedule",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trainer",
+			"item": [
+				{
+					"name": "Get My Schedules",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{trainer-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/trainer/my-schedules",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"trainer",
+								"my-schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gat All Trainer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{gym-url}}/api/trainer",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"trainer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trainee",
+			"item": [
+				{
+					"name": "Book a Class Schedule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{trainee-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"classScheduleId\":\"67b3360024f9a1f58f050345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/trainee/book-class",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"trainee",
+								"book-class"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{trainee-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"classScheduleId\":\"67b3360024f9a1f58f050345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gym-url}}/api/trainee/cancel-booking",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"trainee",
+								"cancel-booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Trainee",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{gym-url}}/api/trainee",
+							"host": [
+								"{{gym-url}}"
+							],
+							"path": [
+								"api",
+								"trainee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
