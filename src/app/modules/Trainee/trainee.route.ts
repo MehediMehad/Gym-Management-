@@ -13,7 +13,7 @@ router.post(
     TraineeControllers.bookClassSchedule
 );
 
-router.post(
+router.delete(
     '/cancel-booking',
     auth('trainee'),
     TraineeControllers.cancelBooking

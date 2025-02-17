@@ -15,7 +15,7 @@ app.use(cors());
 app.use('/api', router);
 const test = async (req: Request, res: Response) => {
     Promise.reject();
-    res.send(`The bicycle is moving at a speed of ${config.port} 🚴`);
+    res.send(`Gym-Management is moving at a speed of ${config.port} `);
 };
 
 app.get('/', test);

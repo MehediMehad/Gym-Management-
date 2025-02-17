@@ -11,6 +11,10 @@ const getMySchedules = async (userEmail: string) => {
     if (!trainer) {
         throw new AppError(StatusCodes.NOT_FOUND, 'Trainer not found.');
     }
+    
+    if (!trainer.assignedClasses || trainer.assignedClasses.length === 0) {
+        throw new AppError(StatusCodes.NOT_FOUND, 'You have no assigned classes.');
+    }
 
     return trainer.assignedClasses;
 };

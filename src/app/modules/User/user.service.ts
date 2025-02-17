@@ -11,6 +11,11 @@ import { TTrainer } from '../Trainer/trainer.interface';
 
 const createTraineeIntoDB = async (payload: TTrainee) => {
     const userData: Partial<TUser> = {};
+    
+    const user = await User.findOne({ email: payload.email });
+    if (user) {
+        throw new AppError(StatusCodes.BAD_REQUEST, 'A user with this email already exists.');
+    }
     //set Trainee Info
     userData.role = 'trainee';
     userData.email = payload.email;

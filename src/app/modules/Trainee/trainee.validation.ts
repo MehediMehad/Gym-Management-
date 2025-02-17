@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const createsTraineeValidationSchema = z.object({
     body: z.object({
-        user: z.string({ required_error: 'Trainee ID is required.' }),
+        // user: z.string({ required_error: 'Trainee ID is required.' }),
         name: z.string({ required_error: 'Trainee name is required.' }),
         gender: z.enum(['male', 'female', 'other'], {
             errorMap: () => ({
